@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="20200220-01" author="john.ma">
+        <comment>相机参数</comment>
+        <createTable tableName="t_camera_parameters">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_CAMERA_PARAMETERS"/>
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="modified_time" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+
+
+            <column name="param_type" type="varchar(100)" remarks="参数类型">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="param_code" type="varchar(100)" remarks="参数编码">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="mechanism_code" type="varchar(100)" remarks="机构编号">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="param_name" type="varchar(100)" remarks="参数名称">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="param_value" type="varchar(100)" remarks="参数值">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_control" type="int(11)" remarks="是否可控">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_edit" type="int(11)" remarks="是否可编辑">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="is_range" type="int(11)" remarks="是否限制值范围">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="param_min_value" type="varchar(100)" remarks="下限值">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="param_max_value" type="varchar(100)" remarks="上限值">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="t_camera_parameters"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="20200225-01" author="john.ma">
+        <comment>实验计划</comment>
+        <createTable tableName="ex_plan">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_PLAN"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cutting_version" type="varchar(100)" remarks="切片版本">
+                <constraints nullable="true"/>
+            </column>
+            <column name="salesman_name" type="varchar(100)" remarks="业务员">
+                <constraints nullable="true"/>
+            </column>
+            <column name="product_specification" type="varchar(100)" remarks="产品尺寸說明">
+                <constraints nullable="true"/>
+            </column>
+            <column name="plan_description" type="varchar(100)" remarks="实验计划说明">
+                <constraints nullable="true"/>
+            </column>
+            <column name="plan_type" type="int(1)" remarks="产品尺寸說明">
+                <constraints nullable="true"/>
+            </column>
+            <column name="training_qty" type="int(11)" remarks="训练样品数量">
+                <constraints nullable="true"/>
+            </column>
+            <column name="test_qty" type="int(11)" remarks="测试样品数量">
+                <constraints nullable="true"/>
+            </column>
+            <column name="receive_date" type="datetime" remarks="收件日期">
+                <constraints nullable="true"/>
+            </column>
+            <column name="recorder" type="varchar(100)" remarks="记录人">
+                <constraints nullable="true"/>
+            </column>
+            <column name="analyst" type="varchar(100)" remarks="算法分析师">
+                <constraints nullable="true"/>
+            </column>
+            <column name="completion_date" type="datetime" remarks="完成日期">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_plan"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-02" author="john.ma">
+        <comment>实验预设参数库</comment>
+        <createTable tableName="ex_preset_param_lib">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_PRESET_PARAM_LIB"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="param_type" type="varchar(100)" remarks="参数类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="param_name" type="varchar(100)" remarks="参数名称">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="param_value" type="varchar(100)" remarks="参数值">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_control" type="varchar(100)" remarks="是否可控">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_edit" type="varchar(100)" remarks="是否可编辑">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_range" type="varchar(100)" remarks="是否限制值范围">
+                <constraints nullable="true"/>
+            </column>
+            <column name="param_min_value" type="varchar(100)" remarks="下限值">
+                <constraints nullable="true"/>
+            </column>
+            <column name="param_max_value" type="varchar(100)" remarks="上限值">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_preset_param_lib"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-03" author="john.ma">
+        <comment>实验参数组</comment>
+        <createTable tableName="ex_param_group">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_PARAM_GROUP"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="group_status" type="int" remarks="状态（合格/不合格）">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_param_group"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-04" author="john.ma">
+        <comment>实验参数明细</comment>
+        <createTable tableName="ex_param_details">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_PARAM_DETAILS"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="param_name" type="varchar(100)" remarks="参数名称 (相機＋參數）">
+                <constraints nullable="false"/>
+            </column>
+
+
+            <column name="mechanism_code" type="varchar(100)" remarks="机构件编号">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="param_type" type="varchar(100)" remarks="参数类型">
+                <constraints nullable="true"/>
+            </column>
+            <column name="param_value" type="varchar(100)" remarks="参数值（默认参数）">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_param_details"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-05" author="john.ma">
+        <comment>实验照片</comment>
+        <createTable tableName="ex_photo_archiving">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_PHOTO_ARCHIVING"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="photo_no" type="varchar(100)" remarks="照片流水编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_code" type="varchar(100)" remarks="相機編號">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inspect_flag" type="char(1)" remarks="相機編號">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_photo_archiving"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-06" author="john.ma">
+        <comment>实验照片缺陷记录</comment>
+        <createTable tableName="ex_defect_record">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_DEFECT_RECORD"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="photo_no" type="varchar(100)" remarks="照片流水编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cutting_version" type="varchar(100)" remarks="切片版本">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_code" type="varchar(100)" remarks="相機編號">
+                <constraints nullable="false"/>
+            </column>
+            <column name="defect_location" type="varchar(100)" remarks="缺陷位置">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="coordinates_x" type="int(2)" remarks="X坐标">
+                <constraints nullable="true"/>
+            </column>
+            <column name="coordinates_y" type="int(2)" remarks="Y坐标">
+                <constraints nullable="true"/>
+            </column>
+            <column name="defect_categories" type="varchar(100)" remarks="缺陷类别">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_defect_record"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-07" author="john.ma">
+        <comment>实验照片缺陷母片位置對照</comment>
+        <createTable tableName="ex_defect_base_location">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_DEFECT_BASE_LOCATION"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="photo_no" type="varchar(100)" remarks="照片流水编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cutting_version" type="varchar(100)" remarks="切片版本">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_code" type="varchar(100)" remarks="相機編號">
+                <constraints nullable="false"/>
+            </column>
+            <column name="defect_location" type="varchar(100)" remarks="缺陷位置">
+                <constraints nullable="false"/>
+            </column>
+            <column name="base_location" type="varchar(100)" remarks="母片位置">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="coordinates_x" type="int" remarks="X坐标">
+                <constraints nullable="true"/>
+            </column>
+            <column name="coordinates_y" type="int" remarks="Y坐标">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_defect_base_location"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-08" author="john.ma">
+        <comment>实验照片切片對照檔</comment>
+        <createTable tableName="ex_cutting_mapping">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_CUTTING_MAPPING"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cutting_version" type="varchar(100)" remarks="切片版本">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_code" type="varchar(100)" remarks="相機編號">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="varchar(100)" remarks="照片位置">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_location" type="varchar(100)" remarks="母片位置">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_cutting_mapping"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-09" author="john.ma">
+        <comment>实验模型</comment>
+        <createTable tableName="ex_model_info">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_MODEL_INFO"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="plan_id" type="varchar(100)" remarks="实验计划id">
+                <constraints nullable="true"/>
+            </column>
+            <column name="plan_name" type="varchar(100)" remarks="实验计划名称">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="true"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="true"/>
+            </column>
+            <column name="model_code" type="varchar(100)" remarks="模型编号">
+                <constraints nullable="true"/>
+            </column>
+            <column name="training_accuracy" type="varchar(100)" remarks="训练正确率">
+                <constraints nullable="true"/>
+            </column>
+            <column name="training_loss_rate" type="varchar(100)" remarks="训练损失率">
+                <constraints nullable="true"/>
+            </column>
+            <column name="verification_accuracy" type="varchar(100)" remarks="验证正确率">
+                <constraints nullable="true"/>
+            </column>
+            <column name="verification_loss_rate" type="varchar(100)" remarks="验证损失率">
+                <constraints nullable="true"/>
+            </column>
+            <column name="harmonic_mean" type="varchar(100)" remarks="调和平均数">
+                <constraints nullable="true"/>
+            </column>
+            <column name="optimal_model" type="varchar(100)" remarks="最佳模型">
+                <constraints nullable="true"/>
+            </column>
+            <column name="param_description" type="varchar(100)" remarks="参数说明">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_model_info"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20200225-10" author="john.ma">
+        <comment>实验报告</comment>
+        <createTable tableName="ex_results_report">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_RESULTS_REPORT"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="plan_id" type="varchar(100)" remarks="实验计划id">
+                <constraints nullable="true"/>
+            </column>
+            <column name="plan_name" type="varchar(100)" remarks="实验计划名称">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="true"/>
+            </column>
+            <column name="group_code" type="varchar(100)" remarks="参数组编号">
+                <constraints nullable="true"/>
+            </column>
+            <column name="model_code" type="varchar(100)" remarks="模型编号">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sample_qty" type="varchar(100)" remarks="实验样品数量">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ex_results" type="varchar(100)" remarks="实验结果">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ex_date" type="datetime" remarks="实验日期">
+                <constraints nullable="true"/>
+            </column>
+            <column name="recorder" type="varchar(100)" remarks="记录人">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_results_report"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="20200226-01" author="john.ma">
+    <comment>实验台相机信息</comment>
+    <createTable tableName="ex_camera_info">
+        <column name="id" type="varchar(36)">
+            <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_CAMERA_INFO"/>
+        </column>
+        <column name="created_at" type="datetime" remarks="创建时间">
+            <constraints nullable="false"/>
+        </column>
+        <column name="modified_at" type="datetime" remarks="更新时间">
+            <constraints nullable="false"/>
+        </column>
+        <column name="created_by" type="char(36)" remarks="创建人">
+            <constraints nullable="false"/>
+        </column>
+        <column name="modified_by" type="char(36)" remarks="更新人">
+            <constraints nullable="false"/>
+        </column>
+        <column name="version" type="int" remarks="版本（乐观锁）">
+            <constraints nullable="false"/>
+        </column>
+        <column name="is_delete" type="int" remarks="逻辑删除">
+            <constraints nullable="false"/>
+        </column>
+
+        <column name="camera_code" type="varchar(100)" remarks="相机编号">
+            <constraints nullable="false"/>
+        </column>
+        <column name="camera_description" type="varchar(100)" remarks="相机描述">
+            <constraints nullable="false"/>
+        </column>
+
+    </createTable>
+    <rollback>
+        <dropTable tableName="ex_camera_info"/>
+    </rollback>
+</changeSet>
+
+    <changeSet id="20200226-02" author="john.ma">
+        <comment>实验计划相机配置</comment>
+        <createTable tableName="ex_plan_camera_conf">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EX_PLAN_CAMERA_CONF"/>
+            </column>
+            <column name="created_at" type="datetime" remarks="创建时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="datetime" remarks="更新时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="char(36)" remarks="创建人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="char(36)" remarks="更新人">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" remarks="版本（乐观锁）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_delete" type="int" remarks="逻辑删除">
+                <constraints nullable="false"/>
+            </column>
+
+
+            <column name="customer_code" type="varchar(100)" remarks="客户编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)" remarks="产品类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sample_code" type="varchar(100)" remarks="來樣编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_qty" type="int" remarks="相機數量">
+                <constraints nullable="false"/>
+            </column>
+            <column name="camera_code" type="varchar(100)" remarks="相机编号">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="ex_plan_camera_conf"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
