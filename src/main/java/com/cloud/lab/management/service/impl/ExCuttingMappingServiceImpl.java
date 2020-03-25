@@ -3,10 +3,12 @@ package com.cloud.lab.management.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.lab.management.entity.ExCuttingMapping;
+import com.cloud.lab.management.entity.ExPlan;
 import com.cloud.lab.management.entity.dto.excuttingmapping.ExCuttingMappingAdd;
 import com.cloud.lab.management.entity.dto.excuttingmapping.ExCuttingMappingSearch;
 import com.cloud.lab.management.mapper.ExCuttingMappingMapper;
 import com.cloud.lab.management.service.IExCuttingMappingService;
+import com.cloud.lab.management.service.IExPlanService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class ExCuttingMappingServiceImpl extends ServiceImpl<ExCuttingMappingMap
 
     @Autowired
     private ExCuttingMappingMapper exCuttingMappingMapper;
+
+    @Autowired
+    private IExPlanService exPlanService;
 
     private static QueryWrapper<ExCuttingMapping> baseQueryWrapper(ExCuttingMappingSearch exCuttingMappingSearch) {
         QueryWrapper<ExCuttingMapping> queryWrapper = new QueryWrapper<>();
@@ -59,5 +64,15 @@ public class ExCuttingMappingServiceImpl extends ServiceImpl<ExCuttingMappingMap
     public List<ExCuttingMapping> listBySearch(ExCuttingMappingSearch exCuttingMappingSearch) {
         QueryWrapper<ExCuttingMapping> exCuttingMappingQueryWrapper = baseQueryWrapper(exCuttingMappingSearch);
         return this.list(exCuttingMappingQueryWrapper);
+    }
+
+    @Override
+    public List<ExCuttingMapping> selectByPlanId(String planId) {
+        ExPlan exPlan = exPlanService.selectOneById(planId);
+        ExCuttingMappingSearch search = new ExCuttingMappingSearch();
+        search.setCuttingVersion(exPlan.getCuttingVersion());
+        search.setProductCode(exPlan.getProductCode());
+        List<ExCuttingMapping> exCuttingMappings = this.listBySearch(search);
+        return exCuttingMappings;
     }
 }

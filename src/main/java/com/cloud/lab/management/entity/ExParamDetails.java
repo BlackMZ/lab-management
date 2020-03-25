@@ -1,6 +1,7 @@
 package com.cloud.lab.management.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.cloud.lab.management.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,8 +9,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDateTime;
 
 /**
  * @Author: John.ma
@@ -64,4 +63,14 @@ public class ExParamDetails extends BaseEntity {
     @ApiModelProperty(value = "参数值（默认参数）")
     @TableField("param_value")
     private String paramValue;
+
+    /** 参数值类型 */
+    @ApiModelProperty(value = "参数值类型")
+    @TableField("value_type")
+    private String valueType;
+
+    /** 模组类型 */
+    @ApiModelProperty(value = "模组类型")
+    @TableField("module_type")
+    private String moduleType;
 }

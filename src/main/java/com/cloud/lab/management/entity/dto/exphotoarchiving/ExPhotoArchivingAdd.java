@@ -45,4 +45,7 @@ public class ExPhotoArchivingAdd {
 
     @ApiModelProperty(value = "检验状态（待验：N/已验：Y，默认待验）")
     private String inspectFlag;
+
+    @ApiModelProperty(value = "照片说明")
+    private String photoDescription;
 }

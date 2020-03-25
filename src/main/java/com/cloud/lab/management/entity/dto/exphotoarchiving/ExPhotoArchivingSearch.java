@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * @Author: John.ma
  * @Description: 实验照片
@@ -37,4 +39,10 @@ public class ExPhotoArchivingSearch extends PageSearch {
 
     @ApiModelProperty(value = "照片流水编号")
     private String photoNo;
+
+    @ApiModelProperty(value = "相機編號")
+    private String cameraCode;
+
+    @ApiModelProperty(value = "相機編號")
+    private List<String> cameraCodeList;
 }

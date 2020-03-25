@@ -59,4 +59,19 @@ public interface IExParamGroupService extends IService<ExParamGroup> {
      * @return
      */
     IPage<ExParamGroup> selectPageBySearch(ExParamGroupSearch exParamGroupSearch);
+
+    /**
+     * 根据id查询
+     * @param planId
+     * @param groupCode
+     * @return
+     */
+    List<ExParamGroup> selectByPlanIdAndGroupCode(String planId, String groupCode);
+
+    /**
+     * 根据planid查询, 返回默认值
+     * @param planId
+     * @return
+     */
+    List<ExParamGroup> getByPlanIdWithDefault(String planId);
 }

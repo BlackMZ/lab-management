@@ -66,5 +66,10 @@ public class ExPresetParamLib extends BaseEntity {
     @ApiModelProperty(value = "上限值")
     @TableField("param_max_value")
     private String paramMaxValue;
+
+    /** 参数值类型 */
+    @ApiModelProperty(value = "参数值类型")
+    @TableField("value_type")
+    private String valueType;
     
 }

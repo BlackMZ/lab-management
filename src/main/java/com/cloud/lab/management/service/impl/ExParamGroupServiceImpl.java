@@ -5,18 +5,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.lab.management.entity.ExParamGroup;
+import com.cloud.lab.management.entity.ExPlan;
 import com.cloud.lab.management.entity.dto.exparamgroup.ExParamGroupAdd;
 import com.cloud.lab.management.entity.dto.exparamgroup.ExParamGroupSearch;
 import com.cloud.lab.management.entity.dto.exparamgroup.ExParamGroupUpdate;
 import com.cloud.lab.management.mapper.ExParamGroupMapper;
 import com.cloud.lab.management.service.IExParamGroupService;
+import com.cloud.lab.management.service.IExPlanService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Author: John.ma
@@ -30,6 +34,10 @@ public class ExParamGroupServiceImpl extends ServiceImpl<ExParamGroupMapper, ExP
     @Autowired
     private ExParamGroupMapper exParamGroupMapper;
 
+    @Autowired
+    private IExPlanService exPlanService;
+
+
     private static QueryWrapper<ExParamGroup> baseQueryWrapper(ExParamGroupSearch exParamGroupSearch) {
         QueryWrapper<ExParamGroup> queryWrapper = new QueryWrapper<>();
         if (!StringUtils.isBlank(exParamGroupSearch.getCustomerCode())) {
@@ -39,12 +47,12 @@ public class ExParamGroupServiceImpl extends ServiceImpl<ExParamGroupMapper, ExP
             queryWrapper.eq("product_code", exParamGroupSearch.getProductCode());
         }
         if (!StringUtils.isBlank(exParamGroupSearch.getSampleCode())) {
-            queryWrapper.eq("sample_cde", exParamGroupSearch.getSampleCode());
+            queryWrapper.eq("sample_code", exParamGroupSearch.getSampleCode());
         }
         if (!Objects.isNull(exParamGroupSearch.getCameraQty())) {
             queryWrapper.eq("camera_qty", exParamGroupSearch.getCameraQty());
         }
-        if (!Objects.isNull(exParamGroupSearch.getGroupCode())) {
+        if (!StringUtils.isBlank(exParamGroupSearch.getGroupCode())) {
             queryWrapper.like("group_code", exParamGroupSearch.getGroupCode());
         }
         return queryWrapper;
@@ -86,5 +94,40 @@ public class ExParamGroupServiceImpl extends ServiceImpl<ExParamGroupMapper, ExP
         IPage<ExParamGroup> page = new Page<>(exParamGroupSearch.getPageNo(), exParamGroupSearch.getPageSize());
         QueryWrapper<ExParamGroup> queryWrapper = baseQueryWrapper(exParamGroupSearch);
         return exParamGroupMapper.selectPage(page, queryWrapper);
+    }
+
+    @Override
+    public List<ExParamGroup> selectByPlanIdAndGroupCode(String planId, String groupCode) {
+        ExPlan exPlan = exPlanService.selectOneById(planId);
+        ExParamGroupSearch search = new ExParamGroupSearch();
+        search.setCustomerCode(exPlan.getCustomerCode())
+                .setProductCode(exPlan.getProductCode())
+                .setSampleCode(exPlan.getSampleCode())
+                .setCameraQty(exPlan.getCameraQty())
+                .setGroupCode(groupCode);
+        return this.listBySearch(search);
+    }
+
+    @Override
+    public List<ExParamGroup> getByPlanIdWithDefault(String planId) {
+        ExPlan exPlan = exPlanService.selectOneById(planId);
+        ExParamGroupSearch search = new ExParamGroupSearch();
+        search.setCustomerCode(exPlan.getCustomerCode())
+                .setProductCode(exPlan.getProductCode())
+                .setSampleCode(exPlan.getSampleCode())
+                .setCameraQty(exPlan.getCameraQty());
+        List<ExParamGroup> exParamGroups = this.listBySearch(search);
+//        if (CollectionUtils.isEmpty(exParamGroups)) {
+//            ExParamGroup group = new ExParamGroup();
+//            group.setCustomerCode(exPlan.getCustomerCode());
+//            group.setProductCode(exPlan.getProductCode());
+//            group.setSampleCode(exPlan.getSampleCode());
+//            group.setCameraQty(exPlan.getCameraQty());
+//            group.setGroupCode("00");
+//            group.setGroupStatus(0);
+//            exParamGroups.add(group);
+//        }
+        List<ExParamGroup> sorted = exParamGroups.stream().sorted(Comparator.comparing(ExParamGroup::getGroupCode)).collect(Collectors.toList());
+        return sorted;
     }
 }

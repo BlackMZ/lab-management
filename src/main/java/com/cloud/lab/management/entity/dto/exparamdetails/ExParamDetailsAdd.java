@@ -1,14 +1,11 @@
 package com.cloud.lab.management.entity.dto.exparamdetails;
 
-import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDateTime;
 
 /**
  * @Author: John.ma
@@ -53,4 +50,8 @@ public class ExParamDetailsAdd {
     /** 参数值（默认参数） */
     @ApiModelProperty(value = "参数值（默认参数）")
     private String paramValue;
+
+    /** 参数值类型 */
+    @ApiModelProperty(value = "参数值类型")
+    private String valueType;
 }

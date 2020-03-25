@@ -1,7 +1,6 @@
 package com.cloud.lab.management.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cloud.lab.management.entity.ExPlan;
 import com.cloud.lab.management.entity.dto.explan.ExPlanAdd;
@@ -46,6 +45,13 @@ public interface IExPlanService extends IService<ExPlan> {
      * @return
      */
     ExPlan selectOneById(String id);
+
+    /**
+     * 根据条件查询查询单个
+     * @param search
+     * @return
+     */
+    ExPlan selectOneBySearch(ExPlanSearch search);
 
     /**
      * 查询

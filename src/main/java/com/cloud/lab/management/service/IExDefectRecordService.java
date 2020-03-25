@@ -2,21 +2,14 @@ package com.cloud.lab.management.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cloud.lab.management.base.ResponseEntity;
-import com.cloud.lab.management.base.ResultModel;
-import com.cloud.lab.management.entity.CameraParameters;
 import com.cloud.lab.management.entity.ExDefectRecord;
-import com.cloud.lab.management.entity.ExParamGroup;
+import com.cloud.lab.management.entity.dto.exdefectrecord.DefectExport;
+import com.cloud.lab.management.entity.dto.exdefectrecord.DefectRecordSaveAll;
 import com.cloud.lab.management.entity.dto.exdefectrecord.ExDefectRecordAdd;
 import com.cloud.lab.management.entity.dto.exdefectrecord.ExDefectRecordSearch;
 import com.cloud.lab.management.entity.dto.exdefectrecord.ExDefectRecordUpdate;
-import com.cloud.lab.management.entity.dto.exparamgroup.ExParamGroupAdd;
-import com.cloud.lab.management.entity.dto.exparamgroup.ExParamGroupSearch;
-import com.cloud.lab.management.entity.dto.exparamgroup.ExParamGroupUpdate;
-import com.cloud.lab.management.entity.vo.CameraParametersVO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: John.ma
@@ -62,9 +55,31 @@ public interface IExDefectRecordService extends IService<ExDefectRecord> {
     List<ExDefectRecord> listBySearch(ExDefectRecordSearch exDefectRecordSearch);
 
     /**
+     * 查询
+     * @return
+     */
+    List<ExDefectRecord> listByPlanIdAndPhotoNo(String planId, String groupId, String photoNo);
+
+    /**
      * 分页查询
      * @param exDefectRecordSearch
      * @return
      */
     IPage<ExDefectRecord> selectPageBySearch(ExDefectRecordSearch exDefectRecordSearch);
+
+
+    /**
+     * 新增
+     * @param recordSaveAll
+     * @return
+     */
+    boolean saveRecordAndUpdateFlag(DefectRecordSaveAll recordSaveAll);
+
+
+    /**
+     * 查询
+     * @param exDefectRecordSearch
+     * @return
+     */
+    List<DefectExport> exportDefect(ExDefectRecordSearch exDefectRecordSearch);
 }

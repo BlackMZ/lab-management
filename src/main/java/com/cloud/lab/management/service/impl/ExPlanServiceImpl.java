@@ -4,15 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.lab.management.entity.CameraParameters;
 import com.cloud.lab.management.entity.ExPlan;
+import com.cloud.lab.management.entity.ExPlanCameraConf;
 import com.cloud.lab.management.entity.dto.explan.ExPlanAdd;
 import com.cloud.lab.management.entity.dto.explan.ExPlanSearch;
 import com.cloud.lab.management.entity.dto.explan.ExPlanUpdate;
-import com.cloud.lab.management.mapper.CameraParametersMapper;
 import com.cloud.lab.management.mapper.ExPlanMapper;
-import com.cloud.lab.management.service.ICameraParametersService;
+import com.cloud.lab.management.service.IExPlanCameraConfService;
 import com.cloud.lab.management.service.IExPlanService;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,9 @@ public class ExPlanServiceImpl extends ServiceImpl<ExPlanMapper, ExPlan> impleme
     @Autowired
     private ExPlanMapper exPlanMapper;
 
+    @Autowired
+    private IExPlanCameraConfService exPlanCameraConfService;
+
 
     private static QueryWrapper<ExPlan> baseQueryWrapper(ExPlanSearch exPlanSearch) {
         QueryWrapper<ExPlan> queryWrapper = new QueryWrapper<>();
@@ -42,7 +45,7 @@ public class ExPlanServiceImpl extends ServiceImpl<ExPlanMapper, ExPlan> impleme
             queryWrapper.eq("product_code", exPlanSearch.getProductCode());
         }
         if (!StringUtils.isBlank(exPlanSearch.getSampleCode())) {
-            queryWrapper.eq("sample_cde", exPlanSearch.getSampleCode());
+            queryWrapper.eq("sample_code", exPlanSearch.getSampleCode());
         }
         if (!Objects.isNull(exPlanSearch.getCameraQty())) {
             queryWrapper.eq("camera_qty", exPlanSearch.getCameraQty());
@@ -54,13 +57,30 @@ public class ExPlanServiceImpl extends ServiceImpl<ExPlanMapper, ExPlan> impleme
     @Override
     public boolean save(ExPlanAdd exPlanAdd) {
         ExPlan exPlan = new ExPlan();
+        int cuttingWidth = exPlanAdd.getCuttingWidth();
+        int cuttingHeight = exPlanAdd.getCuttingHeight();
+        String cutting = cuttingWidth + "*" + cuttingHeight;
+        exPlanAdd.setCuttingVersion(cutting);
         BeanUtils.copyProperties(exPlanAdd, exPlan);
-        return this.save(exPlan);
+        this.save(exPlan);
+
+        List<String> cameras = Lists.newArrayList("C1", "C3", "C4", "C5");
+        List<ExPlanCameraConf> confList = Lists.newArrayList();
+        cameras.forEach(ca -> {
+            ExPlanCameraConf conf = new ExPlanCameraConf();
+            conf.setCustomerCode(exPlanAdd.getCustomerCode()).setProductCode(exPlanAdd.getProductCode()).setSampleCode(exPlanAdd.getSampleCode()).setCameraQty(exPlanAdd.getCameraQty()).setCameraCode(ca);
+            confList.add(conf);
+        });
+        return exPlanCameraConfService.saveBatch(confList);
     }
 
     @Override
     public boolean update(String id, ExPlanUpdate exPlanUpdate) {
         ExPlan exPlan = this.getById(id);
+        int cuttingWidth = exPlanUpdate.getCuttingWidth();
+        int cuttingHeight = exPlanUpdate.getCuttingHeight();
+        String cutting = cuttingWidth + "*" + cuttingHeight;
+        exPlanUpdate.setCuttingVersion(cutting);
         BeanUtils.copyProperties(exPlanUpdate, exPlan);
         return this.updateById(exPlan);
     }
@@ -73,6 +93,13 @@ public class ExPlanServiceImpl extends ServiceImpl<ExPlanMapper, ExPlan> impleme
     @Override
     public ExPlan selectOneById(String id) {
         return this.getById(id);
+    }
+
+    @Override
+    public ExPlan selectOneBySearch(ExPlanSearch search) {
+        QueryWrapper<ExPlan> exPlanQueryWrapper = baseQueryWrapper(search);
+        exPlanQueryWrapper.orderByDesc("modified_at").last("limit 0 , 1");
+        return this.getOne(exPlanQueryWrapper);
     }
 
     @Override

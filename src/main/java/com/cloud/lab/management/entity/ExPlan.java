@@ -1,6 +1,8 @@
 package com.cloud.lab.management.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.cloud.lab.management.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,7 +47,7 @@ public class ExPlan extends BaseEntity {
     private String cuttingVersion;
 
     @ApiModelProperty(value = "业务员")
-    @TableField(value = "salesman_name")
+    @TableField(value = "salesman_name", fill = FieldFill.INSERT_UPDATE)
     private String salesmanName;
 
     @ApiModelProperty(value = "产品尺寸說明")
@@ -73,17 +75,22 @@ public class ExPlan extends BaseEntity {
     private LocalDateTime receiveDate;
 
     @ApiModelProperty(value = "记录人")
-    @TableField(value = "recorder")
+    @TableField(value = "recorder", fill = FieldFill.INSERT_UPDATE)
     private String recorder;
 
     @ApiModelProperty(value = "算法分析师")
-    @TableField(value = "analyst")
+    @TableField(value = "analyst", fill = FieldFill.INSERT_UPDATE)
     private String analyst;
 
     @ApiModelProperty(value = "完成日期")
     @TableField(value = "completion_date")
     private LocalDateTime completionDate;
 
+    public int getCuttingWidth(){
+        return Integer.parseInt(this.cuttingVersion.split("\\*")[0]);
+    }
 
-
+    public int getCuttingHeight(){
+        return Integer.parseInt(this.cuttingVersion.split("\\*")[1]);
+    }
 }

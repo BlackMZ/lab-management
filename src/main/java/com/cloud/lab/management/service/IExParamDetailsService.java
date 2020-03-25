@@ -3,6 +3,7 @@ package com.cloud.lab.management.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cloud.lab.management.entity.ExParamDetails;
+import com.cloud.lab.management.entity.dto.exparamdetails.DetailsAddAll;
 import com.cloud.lab.management.entity.dto.exparamdetails.ExParamDetailsAdd;
 import com.cloud.lab.management.entity.dto.exparamdetails.ExParamDetailsSearch;
 import com.cloud.lab.management.entity.dto.exparamdetails.ExParamDetailsUpdate;
@@ -22,6 +23,13 @@ public interface IExParamDetailsService extends IService<ExParamDetails> {
      * @return
      */
     boolean save(ExParamDetailsAdd exParamDetailsAdd);
+
+    /**
+     * 新增
+     * @param detailsAddAll
+     * @return
+     */
+    boolean saveAll(DetailsAddAll detailsAddAll);
 
     /**
      * 新增
@@ -66,4 +74,11 @@ public interface IExParamDetailsService extends IService<ExParamDetails> {
      * @return
      */
     IPage<ExParamDetails> selectPageBySearch(ExParamDetailsSearch exParamDetailsSearch);
+
+    /**
+     * 根据groupId查询
+     * @param groupId
+     * @return
+     */
+    DetailsAddAll getByGroupId(String groupId);
 }

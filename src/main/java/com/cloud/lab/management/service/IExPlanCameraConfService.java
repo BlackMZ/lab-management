@@ -6,6 +6,7 @@ import com.cloud.lab.management.entity.ExPlanCameraConf;
 import com.cloud.lab.management.entity.dto.explancameraconf.ExPlanCameraConfAdd;
 import com.cloud.lab.management.entity.dto.explancameraconf.ExPlanCameraConfSearch;
 import com.cloud.lab.management.entity.dto.explancameraconf.ExPlanCameraConfUpdate;
+import com.cloud.lab.management.entity.vo.PlanAndCameraVO;
 
 import java.util.List;
 
@@ -59,4 +60,12 @@ public interface IExPlanCameraConfService extends IService<ExPlanCameraConf> {
      * @return
      */
     IPage<ExPlanCameraConf> selectPageBySearch(ExPlanCameraConfSearch search);
+
+
+    /**
+     * 根据id查询
+     * @param planId
+     * @return
+     */
+    PlanAndCameraVO selectByPlanId(String planId);
 }

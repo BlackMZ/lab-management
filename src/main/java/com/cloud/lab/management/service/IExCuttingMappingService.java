@@ -34,4 +34,11 @@ public interface IExCuttingMappingService extends IService<ExCuttingMapping> {
      * @return
      */
     List<ExCuttingMapping> listBySearch(ExCuttingMappingSearch exCuttingMappingSearch);
+
+    /**
+     * 根据id查询
+     * @param planId
+     * @return
+     */
+    List<ExCuttingMapping> selectByPlanId(String planId);
 }

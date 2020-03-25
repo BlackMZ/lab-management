@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.print.attribute.standard.PagesPerMinute;
-
 /**
  * @Author: John.ma
  * @Description: 实验照片缺陷记录

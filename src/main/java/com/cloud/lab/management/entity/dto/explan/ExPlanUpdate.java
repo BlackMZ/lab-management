@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -25,15 +27,19 @@ public class ExPlanUpdate {
     private Integer isDelete;
 
     @ApiModelProperty(value = "客户编号")
+    @NotBlank
     private String customerCode;
 
     @ApiModelProperty(value = "产品类型")
+    @NotBlank
     private String productCode;
 
     @ApiModelProperty(value = "來樣编号")
+    @NotBlank
     private String sampleCode;
 
     @ApiModelProperty(value = "相機數量")
+    @NotNull
     private Integer cameraQty;
 
     @ApiModelProperty(value = "切片版本")
@@ -68,5 +74,11 @@ public class ExPlanUpdate {
 
     @ApiModelProperty(value = "完成日期")
     private LocalDateTime completionDate;
+
+    @ApiModelProperty(value = "切片宽度")
+    private int cuttingWidth;
+
+    @ApiModelProperty(value = "切片高度")
+    private int cuttingHeight;
 
 }

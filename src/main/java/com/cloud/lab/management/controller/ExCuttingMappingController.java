@@ -15,7 +15,13 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -49,10 +55,18 @@ public class ExCuttingMappingController {
 
     @ApiOperation(value = "查询列表", notes = "查询列表")
     @GetMapping(value = "/get/list")
-    public ResponseEntity<ResultModel> getList(ExCuttingMappingSearch search) {
+    public ResponseEntity<ResultModel<List<ExCuttingMapping>>> getList(ExCuttingMappingSearch search) {
         List<ExCuttingMapping> exCuttingMappings = exCuttingMappingService.listBySearch(search);
         return new ResponseEntity<>(ResultModel.ok(exCuttingMappings));
     }
+
+    @ApiOperation(value = "根据实验计划id查询", notes = "根据实验计划id查询")
+    @GetMapping(value = "/get/by/{planId}")
+    public ResponseEntity<ResultModel<List<ExCuttingMapping>>> getByPlanId(@PathVariable("planId") String id) {
+        List<ExCuttingMapping> exCuttingMappings = exCuttingMappingService.selectByPlanId(id);
+        return new ResponseEntity<>(ResultModel.ok(exCuttingMappings));
+    }
+
 
     @ApiOperation(value = "导入excel", notes = "导入excel")
     @PostMapping(value = "/import")
@@ -133,4 +147,6 @@ public class ExCuttingMappingController {
         }
         return new ResponseEntity<>(ResultModel.failure());
     }
+
+
 }

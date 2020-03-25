@@ -1,17 +1,11 @@
 package com.cloud.lab.management.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDateTime;
 
 /**
  * @Author: John.ma
@@ -23,7 +17,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("t_camera_parameters")
 public class CameraParametersVO {
 
     /** 参数类型 */

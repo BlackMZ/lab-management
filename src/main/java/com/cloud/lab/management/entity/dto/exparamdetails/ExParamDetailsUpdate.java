@@ -50,4 +50,8 @@ public class ExParamDetailsUpdate {
     /** 参数值（默认参数） */
     @ApiModelProperty(value = "参数值（默认参数）")
     private String paramValue;
+
+    /** 参数值类型 */
+    @ApiModelProperty(value = "参数值类型")
+    private String valueType;
 }
