@@ -3,6 +3,7 @@ package com.cloud.lab.management.util;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: John.ma
@@ -24,15 +27,14 @@ public class RemoteCommandClient {
     private static String DEFAULTCHART = "UTF-8";
 
 
-
     /**
      * 登录主机
      *
      * @return 登录成功返回true，否则返回false
      */
     public static Connection connect(String ip,
-                                   String userName,
-                                   String userPwd) {
+                                     String userName,
+                                     String userPwd) {
 
         boolean flg = false;
         Connection conn = null;
@@ -97,7 +99,7 @@ public class RemoteCommandClient {
     private static String processStdout(InputStream in, String charset) {
         InputStream stdout = new StreamGobbler(in);
         StringBuffer buffer = new StringBuffer();
-        ;
+
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(stdout, charset));
             String line = null;
@@ -115,13 +117,23 @@ public class RemoteCommandClient {
     }
 
     public static void main(String[] args) {
-        String ip = "172.16.10.168";
-        String user = "root";
-        String password = "123456";
-        Connection connect = connect(ip, user, password);
-        String command = "docker run -it --rm --net=host --gpus all -v /root/tensorflow/:/root/tensorflow/ cloudkeeper/tensorflow:2.0.1-gpu-py3 nohup python /root/tensorflow/test_speed/TF_Docker_RG_Forloop0323.py &";
-//        String command = "ifconfig";
-        String ifconfig = execute(connect, command);
-        System.out.println(ifconfig);
+
+        List<String> cameras = Lists.newArrayList("C1","C6","C2","C3","C5","C4");
+        List<String> collect = cameras.stream().sorted().collect(Collectors.toList());
+        collect.forEach(s->{
+            System.out.println(s);
+        });
+//        String ip = "172.16.10.168";
+//        String user = "root";
+//        String password = "123456";
+////        String password = "D:\\zmodel\\GA_SV_0424_0\\GA_C1_SV\\GA_C1_Class_1_0422_0.h5";
+//
+//        ScpClient scpClient = new ScpClient(ip, 22, user, password);
+//        scpClient.putFile("D:\\zbackup\\TF_Docker_test_model_0319.h5", "/root/tensorflow/test_speed/");
+//
+//        Connection connect = connect(ip, user, password);
+//        String command = "docker run --rm --net=host --gpus all -v /root/tensorflow/:/root/tensorflow/ cloudkeeper/tensorflow:2.0.1-gpu-py3 nohup python /root/tensorflow/test_speed/TF_Docker_RG_Forloop0323.py &";
+//        String ifconfig = execute(connect, command);
+//        System.out.println(ifconfig);
     }
 }

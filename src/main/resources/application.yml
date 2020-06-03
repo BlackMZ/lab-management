@@ -12,6 +12,13 @@ spring:
 #    user: admin
 #    password: admin
 #    broker-url: tcp://localhost:61616
+  rabbitmq:
+    host: 192.168.43.128
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
+
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
