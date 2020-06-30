@@ -13,7 +13,7 @@ spring:
 #    password: admin
 #    broker-url: tcp://localhost:61616
   rabbitmq:
-    host: 192.168.43.128
+    host: 172.16.10.155
     port: 5672
     username: admin
     password: 123456
